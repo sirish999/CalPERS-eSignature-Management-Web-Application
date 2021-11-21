@@ -1,0 +1,68 @@
+    #btnSaveSign {
+            color: #fff;
+            background: #f99a0b;
+            padding: 5px;
+            border: none;
+            border-radius: 5px;
+            font-size: 20px;
+            margin-top: 10px;
+        }
+        #signArea{
+            width:454px;
+            margin: 15px auto;
+        }
+        .sign-container {
+            width: 90%;
+            margin: auto;
+        }
+        .sign-preview {
+            display: none;
+            width: 300px;
+            height: 100px;
+            border: solid 1px #CFCFCF;
+            margin: 10px 5px;
+        }
+        .tag-ingo {
+            font-family: cursive;
+            font-size: 12px;
+            text-align: left;
+            font-style: oblique;
+        }
+        .center-text {
+            text-align: center;
+        }
+
+body {
+    background-color: #E7EBEE;
+    font-size: 14px;
+    font-family: "Open Sans", Arial, Tahoma, sans-serif;
+    width: 100%;
+}
+.site-logo {
+    width: 125px;
+}
+.post-title{text-align: center;}
+.btn-form-action {
+    width: 125px;
+}
+.form-action-group {
+    text-align: center;
+    border-top: solid #eaeaea 1px;
+	padding-top: 15px;
+}
+.form-group {
+    margin-bottom: 5px;
+    margin-right: 0px !important;
+    margin-left: 0px !important;
+}
+.form-group label.required:after {
+  content : "*";
+  color : #ff7575;
+}
+.form-group label.error {
+    margin: 0px;
+    color: #d44c4c;
+    font-size: 10px;
+}
+.dup-chek-details{ font-size: 12px; font-weight: bold; }
+.form-alter{ display:none; }

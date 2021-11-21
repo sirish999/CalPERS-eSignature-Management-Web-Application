@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <center>
+    <div class="d-sm-flex align-items-center justify-content-between mb-4 mt-4">        
+            <h2 class="h2 mb-0 text-gray-800">Signature Portal</h2>
+    </div>
+    </center>
+    <br>
+    <div id="preferred_name_enter">
+        <h1 class="h3 mb-0 text-gray-800">Please enter your preferred name</h1>
+        <input type="text" id="pname" name="pname"><br>
+        <br>
+        <input type="submit" class="btn-primary btn" onclick="setPrefName()" value="Submit">
+    </div>
+    <br>
+    <br>
+    <h1 class="h3 mb-0 text-gray-800">Would you like to draw or upload your signature?</h1>
+    <br>
+
+    <!-- Main Content Here -->
+    <div class="row">
+
+        <!-- Company Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                         <a class="nav-link" href="{% url 'draw' %}">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Draw</div>
+                            <!-- <div class="h5 mb-0 font-weight-bold text-gray-800">4,083</div> -->
+                        </div>
+                        </a>
+                        <div class="col-auto">
+                            <i class="fas fa-pen fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <a class="nav-link" href="{% url 'upload' %}">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Upload</div>
+                            <!-- <div class="h5 mb-0 font-weight-bold text-gray-800">18,002</div> -->
+                        </div>
+                        </a>
+                        <div class="col-auto">
+                            <i class="fas fa-upload fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Preferred Name - Start -->
+    <!-- Button trigger modal -->
+     <!-- Modal -->
+ 
+    <!-- Preferred Name - End -->
+    <br>
+    <h1 class="h3 mb-0 text-gray-800">Your Current Signature</h1>
+    <br>
+    <img src="" id="image_preview" class="image_preview" alt="Red dot" />
+
+
+
+</div>
+<!-- /.container-fluid -->
+{% endblock content %}
+
+{% block script %} 
+
+ {% load static %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script type="text/javascript">
+function setDisplay(){    
+        var sign_preview_status = document.getElementById("image_preview");
+        if(sign_preview_status.getAttribute('src') == "")
+        {
+            sign_preview_status.style.display = "none";
+        }
+        else
+        {
+            sign_preview_status.style.display = "inline";
+        }
+        }
+        function setPrefName()
+        {
+            alert("Setting value");
+
+            var value=document.getElementById("pname").value;
+            $.ajax({
+                url: 'http://127.0.0.1:8000/saveprefname/'+value,
+                // data: { },
+                type: 'get',
+                dataType: 'json',
+                'success': function (data) {
+                pref_name =  data['response.result'];
+                        // $("#image_preview").attr("src", base64link);
+                // alert(pref_name)
+                 }
+                });
+                swal("Success!", "Your Preferred name is set to " + value);
+                        // call other functions or do an AJAX call or sumbit your form
+            }
+ 
+    $(document).ready(function() {
+            var base64link ="";
+            $.ajax({
+                url: 'http://127.0.0.1:8000/fetchimage/',
+            // data: { },
+            type: 'get',
+            dataType: 'json',
+            'success': function (data) {
+                base64link =  data['base64link'];
+                $("#image_preview").attr("src", base64link);
+                // alert(base64link);
+                setDisplay();
+            }
+        });
+        var preferred_name_enter_status = document.getElementById("preferred_name_enter");
+        preferred_name_enter_status.style.display = "none";
+        $.ajax({
+                url: 'http://127.0.0.1:8000/fetchprefname/',
+            // data: { },
+            type: 'get',
+            dataType: 'json',
+            'success': function (data) {
+            pref_name =  data['pref_name'];
+            // $("#image_preview").attr("src", base64link);
+            if(pref_name === null){
+            // alert("Null");
+            var preferred_name_enter_status = document.getElementById("preferred_name_enter");
+            preferred_name_enter_status.style.display = "inline";
+            // setPrefName();
+            }
+            }
+        });
+    });
+    </script>
+
+{% endblock script %}
